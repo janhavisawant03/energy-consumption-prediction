@@ -23,32 +23,24 @@ building_type = st.selectbox(
 square_footage = st.number_input(
     "Square Footage",
     min_value=0.0,
-    value=0.0,
-    placeholder="Enter square footage",
-    key="square_footage"
+    value=1000.0
 )
 
 number_of_occupants = st.number_input(
     "Number of Occupants",
     min_value=0,
-    value=0,
-    placeholder="Enter occupants",
-    key="number_of_occupants"
+    value=1
 )
 
 appliances_used = st.number_input(
     "Appliances Used",
     min_value=0,
-    value=0,
-    placeholder="Enter appliances count",
-    key="appliances_used"
+    value=1
 )
 
 average_temperature = st.number_input(
     "Average Temperature",
-    value=0.0,
-    placeholder="Enter temperature",
-    key="average_temperature"
+    value=25.0
 )
 
 day_of_week = st.selectbox(
@@ -58,7 +50,7 @@ day_of_week = st.selectbox(
 )
 
 # prediction button
-if st.button("Predict Energy Consumption", key="predict_btn"):
+if st.button("Predict Energy Consumption"):
 
     if building_type == "Select" or day_of_week == "Select":
         st.warning("Please select valid inputs!")
@@ -76,8 +68,6 @@ if st.button("Predict Energy Consumption", key="predict_btn"):
         for col in encoders:
             input_data[col] = encoders[col].transform(input_data[col])
 
-        # prediction
         prediction = model.predict(input_data)[0]
 
-        # display result
-        st.success(f"Predicted Energy Consumption: {prediction:.2f}")
+        st.success(f"Predicted Energy Consumption: {prediction:.2f} kWh")
