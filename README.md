@@ -23,13 +23,27 @@ The application is built using **Python, Scikit-learn, and Streamlit**, and allo
 
 ## 🧠 Machine Learning Model
 
-* Algorithm Used: **Random Forest Regressor**
-* Model trained on energy consumption dataset
-* Includes:
+* **Algorithm used:** Random Forest Regressor (tuned)
+* **Pipeline:** EDA → missing value/duplicate checks → label encoding → train/test split → model comparison → 5-fold cross-validation → hyperparameter tuning → final model
 
-  * Data preprocessing
-  * Feature encoding
-  * Model training and evaluation
+### 📊 Model Performance
+
+Two models were trained and compared on a held-out validation set (20% of training data):
+
+| Model                            | R² Score  | MAE (kWh) |
+|----------------------------------|-----------|-----------|
+| Linear Regression (baseline)     | 0.845     | 330.4     |
+| Random Forest (default)          | 0.978     | 109.4     |
+| **Random Forest (tuned, final)** | **0.976** | **114.3** |
+
+**5-fold cross-validation** on the tuned Random Forest confirms the model generalizes well and isn't overfitting to a single split:
+* Average R²: **0.971**
+* Average MAE: **125.4 kWh**
+
+Random Forest was chosen as the final model since it captures non-linear relationships between building features and energy usage far better than a linear baseline.
+
+### Feature Importance
+The notebook includes a feature importance plot showing which inputs (square footage, occupants, appliances used, temperature, etc.) drive the model's predictions most strongly.
 
 ---
 
@@ -41,6 +55,7 @@ The application is built using **Python, Scikit-learn, and Streamlit**, and allo
 * Scikit-learn
 * Streamlit
 * Joblib
+* Matplotlib / Seaborn (EDA)
 
 ---
 
@@ -49,12 +64,14 @@ The application is built using **Python, Scikit-learn, and Streamlit**, and allo
 ```
 energy-consumption-prediction/
 │
-├── app.py                  # Streamlit application
-├── energy_model.pkl        # Trained ML model
-├── encoders.pkl            # Label encoders for categorical data
-├── requirements.txt        # Required Python libraries
-├── train_energy_data.csv   # Dataset used for training
-└── README.md               # Project documentation
+├── app.py                              # Streamlit application
+├── energy_model.pkl                    # Trained ML model
+├── encoders.pkl                        # Label encoders for categorical data
+├── energy_consumption_analysis.ipynb   # Full EDA + model training notebook
+├── requirements.txt                    # Required Python libraries
+├── train_energy_data.csv               # Dataset used for training
+├── test_energy_data.csv                # Held-out dataset used for final predictions
+└── README.md                           # Project documentation
 ```
 
 ---
@@ -118,14 +135,16 @@ streamlit run app.py
 
 ## 📈 Future Improvements
 
-* Add data visualization (graphs & charts)
+* Add data visualization directly in the Streamlit app (not just the notebook)
 * Improve UI/UX design
-* Add more advanced ML models
+* Try gradient boosting models (XGBoost/LightGBM) for comparison
 * Deploy using Docker or cloud platforms
+* Add automated tests for the prediction pipeline
 
 ---
 
 ## 👩‍💻 Author
+Janhavi Suhas Sawant
 
 **Janhavi Sawant**
-BSc Computer Science Student | Aspiring Data Scientist
+BSc Computer Science Student | Aspiring Data Analyst
