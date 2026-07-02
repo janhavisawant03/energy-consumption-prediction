@@ -144,7 +144,6 @@ streamlit run app.py
 ---
 
 ## 👩‍💻 Author
-Janhavi Suhas Sawant
 
-**Janhavi Sawant**
+**Janhavi Suhas Sawant**
 BSc Computer Science Student | Aspiring Data Analyst
